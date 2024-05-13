@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: backend
+
+  main:
+    allow-circular-references: true
+
+  security:
+    user:
+      name: user
+      password: password
+
+    jwt:
+      uri: /api/login
+      header: Authorization
+      prefix: Bearer
+      secret: mySecretKey
+      expiration: 3600
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/spring-security
+
+server:
+  port: 8080
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
