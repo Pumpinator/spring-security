@@ -1,7 +1,6 @@
 package com.alejandrodcardona.springsecurity.backend.service;
 
-import com.alejandrodcardona.springsecurity.backend.entity.User;
-import com.alejandrodcardona.springsecurity.backend.entity.UserDetailsImpl;
+import com.alejandrodcardona.springsecurity.backend.dto.UserDetailsImpl;
 import com.alejandrodcardona.springsecurity.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

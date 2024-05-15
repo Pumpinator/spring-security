@@ -1,9 +1,12 @@
 package com.alejandrodcardona.springsecurity.backend.dto;
 
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class LoginRequest {
 
     @NonNull

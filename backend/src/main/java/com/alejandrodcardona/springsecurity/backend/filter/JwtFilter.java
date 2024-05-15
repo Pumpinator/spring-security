@@ -1,8 +1,7 @@
 package com.alejandrodcardona.springsecurity.backend.filter;
 
 import com.alejandrodcardona.springsecurity.backend.configuration.JwtConfiguration;
-import com.alejandrodcardona.springsecurity.backend.entity.User;
-import com.alejandrodcardona.springsecurity.backend.entity.UserDetailsImpl;
+import com.alejandrodcardona.springsecurity.backend.dto.UserDetailsImpl;
 import com.alejandrodcardona.springsecurity.backend.service.JwtService;
 import com.alejandrodcardona.springsecurity.backend.service.UserService;
 import io.jsonwebtoken.Claims;

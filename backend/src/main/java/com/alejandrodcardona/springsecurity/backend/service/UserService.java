@@ -1,23 +1,18 @@
 package com.alejandrodcardona.springsecurity.backend.service;
 
-import ch.qos.logback.classic.encoder.JsonEncoder;
 import com.alejandrodcardona.springsecurity.backend.entity.Role;
 import com.alejandrodcardona.springsecurity.backend.entity.User;
-import com.alejandrodcardona.springsecurity.backend.entity.UserDetailsImpl;
 import com.alejandrodcardona.springsecurity.backend.exception.UserException;
 import com.alejandrodcardona.springsecurity.backend.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +47,7 @@ public class UserService {
 
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreatedAt(new Date().toInstant());
         user.setRoles(new HashSet<>() {{
             add(role);
         }});

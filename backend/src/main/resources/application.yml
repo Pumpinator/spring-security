@@ -14,12 +14,16 @@ spring:
       uri: /api/login
       header: Authorization
       prefix: Bearer
-      secret: mySecretKey
-      expiration: 3600
+      secret: eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcxNTIwMTU0MywiaWF0IjoxNzE1MjAxNTQzfQ.u9sfLb1jCbjHavzjY5lA3DrXh5fSPDnJzCGZLfHgF7M
+      expiration: 3600000
 
   data:
     mongodb:
       uri: mongodb://localhost:27017/spring-security
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
 server:
   port: 8080
@@ -31,3 +35,5 @@ feign:
         connectTimeout: 5000
         readTimeout: 5000
         loggerLevel: basic
+
+frontend.uri: http://localhost:5173

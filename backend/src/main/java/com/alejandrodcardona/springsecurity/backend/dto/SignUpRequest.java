@@ -1,9 +1,13 @@
 package com.alejandrodcardona.springsecurity.backend.dto;
 
 import com.mongodb.lang.NonNull;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class SignUpRequest {
 
     @NonNull

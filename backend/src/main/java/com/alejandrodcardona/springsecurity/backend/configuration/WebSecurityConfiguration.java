@@ -5,6 +5,7 @@ import com.alejandrodcardona.springsecurity.backend.service.JwtService;
 import com.alejandrodcardona.springsecurity.backend.service.UserDetailsServiceImpl;
 import com.alejandrodcardona.springsecurity.backend.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -25,6 +26,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfiguration {
@@ -37,6 +41,12 @@ public class WebSecurityConfiguration {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthEntrypointConfiguration authEntrypointConfiguration;
+
+    @Value("${frontend.uri:}")
+    private String frontendUri;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -60,8 +70,13 @@ public class WebSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(cors -> {
-                    cors.disable();
-
+                    cors.configurationSource(request -> {
+                        CorsConfiguration configuration = new CorsConfiguration();
+                        configuration.setAllowedOrigins(Collections.singletonList(frontendUri)); // Origen permitido
+                        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
+                        configuration.setAllowedHeaders(Arrays.asList("Authorization", "content-type")); // Cabeceras permitidas
+                        return configuration;
+                    });
                 })
                 .csrf(csrf -> {
                     csrf.disable();
@@ -70,12 +85,12 @@ public class WebSecurityConfiguration {
                     sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .exceptionHandling(exceptionHandling -> {
-                    exceptionHandling.authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+                    exceptionHandling.authenticationEntryPoint(authEntrypointConfiguration);
                 })
                 .addFilterBefore(new JwtFilter(jwtConfiguration, jwtService, userService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorizeRequests -> {
                     authorizeRequests.requestMatchers(HttpMethod.POST, "/api/login").permitAll();
-                    authorizeRequests.requestMatchers(HttpMethod.POST, "/api/users").anonymous();
+                    authorizeRequests.requestMatchers(HttpMethod.POST, "/api/users").permitAll();
                     authorizeRequests.requestMatchers(HttpMethod.POST, "/api/register").anonymous();
                     authorizeRequests.anyRequest().authenticated();
                 })

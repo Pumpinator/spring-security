@@ -31,6 +31,8 @@ public class User {
     @JsonIgnore
     private String password;
 
+    private String pictureUrl;
+
     @CreatedDate
     private Instant createdAt;
 
@@ -47,6 +49,7 @@ public class User {
         this.id = user.id;
         this.email = user.email;
         this.password = user.password;
+        this.pictureUrl = user.pictureUrl;
         this.createdAt = user.getCreatedAt();
         this.updatedAt = user.getUpdatedAt();
         this.enabled = user.enabled;

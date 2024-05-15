@@ -1,5 +1,6 @@
-package com.alejandrodcardona.springsecurity.backend.entity;
+package com.alejandrodcardona.springsecurity.backend.dto;
 
+import com.alejandrodcardona.springsecurity.backend.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
